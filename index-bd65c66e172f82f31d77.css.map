@@ -1,0 +1,1 @@
+{"version":3,"file":"index-bd65c66e172f82f31d77.css","mappings":"AAAA,KACE,qBACF,CAEA,OAGE,2DADA,YAAa,CADb,WAGF","sources":["webpack://base-course/./src/style.css"],"sourcesContent":["body {\n  background-color: #ccc;\n}\n\n.image {\n  width: 300px;\n  height: 300px;\n  background: url(\"./images/cat.jpeg\") center center / cover;\n}\n"],"names":[],"sourceRoot":""}
