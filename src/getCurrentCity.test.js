@@ -7,6 +7,9 @@ describe("getCurrentCity", () => {
     window.fetch = () => {};
     jest.clearAllMocks();
     fetchSpy = jest.spyOn(window, "fetch");
+    fetchSpy.mockResolvedValueOnce({
+      json: () => Promise.resolve(mockData.ipData),
+    });
   });
 
   it("is a function", () => {
@@ -15,13 +18,10 @@ describe("getCurrentCity", () => {
 
   it("makes call for city from ip", () => {
     getCurrentCity();
-    expect(window.fetch).toHaveBeenCalledWith("http://ip-api.com/json/");
+    expect(window.fetch).toHaveBeenCalledWith("https://ipwho.is/");
   });
 
   it("return 'Saratov' for mocked data", async () => {
-    fetchSpy.mockResolvedValueOnce({
-      json: () => Promise.resolve(mockData.ipData),
-    });
     const result = await getCurrentCity();
     expect(result).toBe(mockData.ipData.city);
   });
