@@ -50,7 +50,7 @@ async function a() {
     // читаем значение из формы
     const formElement = ev.target;
     const input = formElement.querySelector("input");
-    const {value} = input;
+    const { value } = input;
     input.value = "";
 
     // добавляем элемент в список
