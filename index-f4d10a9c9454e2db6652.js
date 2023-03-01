@@ -90,8 +90,9 @@ function _showWeather() {
         case 3:
           _context.t1 = _context.sent;
           _context.t2 = el;
-          (0, _context.t0)(_context.t1, _context.t2);
-        case 6:
+          _context.next = 7;
+          return (0, _context.t0)(_context.t1, _context.t2);
+        case 7:
         case "end":
           return _context.stop();
       }
@@ -105,4 +106,4 @@ function _showWeather() {
 showWeather(document.getElementById("app"));
 /******/ })()
 ;
-//# sourceMappingURL=index-b0a0580ce1b3c31c781e.js.map
+//# sourceMappingURL=index-f4d10a9c9454e2db6652.js.map
