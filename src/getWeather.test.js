@@ -53,4 +53,9 @@ describe("getWeather", () => {
       "http://openweathermap.org/img/wn/04d@2x.png"
     );
   });
+
+  it("get city", async () => {
+    const result = await getWeather("Saratov", el);
+    expect(result).toBe(mockData.weatherData);
+  });
 });
