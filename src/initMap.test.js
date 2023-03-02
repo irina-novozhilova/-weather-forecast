@@ -1,4 +1,4 @@
-import { initMap , setCenter } from "./initMap";
+import { initMap, setCenter } from "./initMap";
 
 describe("initMap", () => {
   beforeEach(() => {
