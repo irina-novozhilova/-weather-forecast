@@ -6,6 +6,17 @@ describe("getWeather", () => {
   let fetchSpy;
 
   beforeEach(() => {
+    window.ymaps = {
+      ready(fn) {
+        if (fn) fn();
+        return this;
+      },
+    };
+    window.yandexMap = {
+      setCenter(coords) {
+        return coords;
+      },
+    };
     window.fetch = () => {};
     jest.clearAllMocks();
     el = document.createElement("div");
