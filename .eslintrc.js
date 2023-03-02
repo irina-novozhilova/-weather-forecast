@@ -17,4 +17,8 @@ module.exports = {
     "no-console": ["error", { allow: ["warn", "error", "log"] }],
     "no-alert": "off",
   },
+  globals: {
+    ymaps: "writable",
+    yandexMap: "writable",
+  },
 };
