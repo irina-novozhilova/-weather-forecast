@@ -4,7 +4,11 @@ const appId = "e210384c65b4195059196d42f46ca457";
 const getWeatherByCityUrl = "https://api.openweathermap.org/data/2.5/weather";
 
 export async function getWeather(cityName, el) {
-  const element = el;
+  let element = el;
+
+  if (!element) {
+    element = document.createElement("div");
+  }
   const weatherDataResponse = await window.fetch(
     `${getWeatherByCityUrl}?units=metric&q=${cityName}&appid=${appId}`
   );

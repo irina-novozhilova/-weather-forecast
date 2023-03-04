@@ -1,6 +1,6 @@
 import { getWeather } from "./getWeather";
 
-async function a() {
+export async function storageManager(rootElement) {
   // Должна возвращать список пользователя
   // Если пользователь ничего не вводил - пустой список
   async function readList() {
@@ -22,7 +22,7 @@ async function a() {
     curEl.innerHTML = `<ol>${items
       .map((cur) => `<li><a href="#">${cur}</a></li>`)
       .join("")}</ol>`;
-    const citiesLinks = document.querySelectorAll("a");
+    const citiesLinks = rootElement.querySelectorAll("a");
 
     citiesLinks.forEach((curCity) => {
       curCity.addEventListener("click", (ev) => {
@@ -34,8 +34,8 @@ async function a() {
   }
 
   // Получаем указатели на нужные элементы
-  const form = document.querySelector("form");
-  const listEl = document.querySelector("#list");
+  const form = rootElement.querySelector("form");
+  const listEl = rootElement.querySelector("#list");
 
   // Читаем список при старте
   let items = await readList();
@@ -66,5 +66,3 @@ async function a() {
     saveList(items);
   });
 }
-
-a();
