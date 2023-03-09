@@ -1,13 +1,17 @@
 import { storageManager } from "./localStorage";
 import * as mockData from "./mockData";
+import { getWeather } from "./getWeather";
 
 describe("storageManager", () => {
+  let app;
   let el;
   let form;
   let listEl;
   let input;
   let fetchSpy;
   beforeEach(async () => {
+    app = document.createElement("div");
+    app.setAttribute("id", "app");
     el = document.createElement("div");
     form = document.createElement("form");
     input = document.createElement("input");
@@ -50,5 +54,18 @@ describe("storageManager", () => {
     el.querySelector("input").value = "Saratov";
     el.querySelector("form").submit();
     expect(el.querySelector("input").value).toBe("");
+  });
+
+  it("add new city after click", async () => {
+    el.querySelector("input").value = "Saratov";
+    el.querySelector("form").submit();
+
+    const cityLink = el.querySelector("div#list ol a");
+    expect(cityLink.innerHTML).toBe("Saratov");
+
+    cityLink.click();
+    await getWeather("Saratov", app);
+
+    expect(app.querySelector("p").innerHTML).toBe("Город Saratov");
   });
 });
