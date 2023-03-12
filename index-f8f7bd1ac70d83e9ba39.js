@@ -29,22 +29,33 @@ function _getWeather() {
           if (!element) {
             element = document.createElement("div");
           }
-          _context.next = 4;
+          _context.prev = 2;
+          _context.next = 5;
           return window.fetch("".concat(getWeatherByCityUrl, "?units=metric&q=").concat(cityName, "&appid=").concat(appId));
-        case 4:
+        case 5:
           weatherDataResponse = _context.sent;
-          _context.next = 7;
+          _context.next = 8;
           return weatherDataResponse.json();
-        case 7:
+        case 8:
           weatherData = _context.sent;
+          // if (weatherData.cod === 404) {
+          //   return weatherData;
+          // }
+
           element.innerHTML = "\n      <p>\u0413\u043E\u0440\u043E\u0434 ".concat(weatherData.name, "</p>\n      <p>\u0422\u0435\u043A\u0443\u0449\u0430\u044F \u0442\u0435\u043C\u043F\u0435\u0440\u0430\u0442\u0443\u0440\u0430 ").concat(weatherData.main.temp, "</p>\n      <img src=\"http://openweathermap.org/img/wn/").concat(weatherData.weather[0].icon, "@2x.png\" alt=\"weather\" />\n");
           (0,_initMap__WEBPACK_IMPORTED_MODULE_0__/* .setCenter */ .U)(weatherData);
           return _context.abrupt("return", weatherData);
-        case 11:
+        case 14:
+          _context.prev = 14;
+          _context.t0 = _context["catch"](2);
+          return _context.abrupt("return", {
+            cod: 404
+          });
+        case 17:
         case "end":
           return _context.stop();
       }
-    }, _callee);
+    }, _callee, null, [[2, 14]]);
   }));
   return _getWeather.apply(this, arguments);
 }
@@ -128,10 +139,10 @@ function storageManager(_x) {
   return _storageManager.apply(this, arguments);
 }
 function _storageManager() {
-  _storageManager = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(rootElement) {
+  _storageManager = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(rootElement) {
     var readList, _readList, saveList, drawList, form, listEl, items;
-    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-      while (1) switch (_context2.prev = _context2.next) {
+    return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+      while (1) switch (_context3.prev = _context3.next) {
         case 0:
           drawList = function _drawList(el, items) {
             var curEl = el;
@@ -152,21 +163,21 @@ function _storageManager() {
             localStorage.setItem("myList", str);
           };
           _readList = function _readList3() {
-            _readList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+            _readList = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
               var jsonList;
-              return _regeneratorRuntime().wrap(function _callee$(_context) {
-                while (1) switch (_context.prev = _context.next) {
+              return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+                while (1) switch (_context2.prev = _context2.next) {
                   case 0:
                     jsonList = localStorage.getItem("myList");
                     if (!jsonList) {
                       jsonList = "[]";
                     }
-                    return _context.abrupt("return", JSON.parse(jsonList));
+                    return _context2.abrupt("return", JSON.parse(jsonList));
                   case 3:
                   case "end":
-                    return _context.stop();
+                    return _context2.stop();
                 }
-              }, _callee);
+              }, _callee2);
             }));
             return _readList.apply(this, arguments);
           };
@@ -176,39 +187,62 @@ function _storageManager() {
           // Получаем указатели на нужные элементы
           form = rootElement.querySelector("form");
           listEl = rootElement.querySelector("#list"); // Читаем список при старте
-          _context2.next = 8;
+          _context3.next = 8;
           return readList();
         case 8:
-          items = _context2.sent;
+          items = _context3.sent;
           // и отрисовываем список
           drawList(listEl, items);
-          form.addEventListener("submit", function (ev) {
-            // чтобы не перезагружать страницу
-            ev.preventDefault();
+          form.addEventListener("submit", /*#__PURE__*/function () {
+            var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(ev) {
+              var formElement, input, value, weatherData, arrValue;
+              return _regeneratorRuntime().wrap(function _callee$(_context) {
+                while (1) switch (_context.prev = _context.next) {
+                  case 0:
+                    // чтобы не перезагружать страницу
+                    ev.preventDefault();
 
-            // читаем значение из формы
-            var formElement = ev.target;
-            var input = formElement.querySelector("input");
-            var value = input.value;
-            input.value = "";
+                    // читаем значение из формы
+                    formElement = ev.target;
+                    input = formElement.querySelector("input");
+                    value = input.value;
+                    input.value = "";
+                    _context.next = 7;
+                    return (0,_getWeather__WEBPACK_IMPORTED_MODULE_0__/* .getWeather */ .p)(value, document.getElementById("app"));
+                  case 7:
+                    weatherData = _context.sent;
+                    // проверка на несуществующий город
+                    if (weatherData.cod === 200) {
+                      console.log(weatherData);
 
-            // добавляем элемент в список
-            // items.push(value);
-            var arrValue = [value];
-            items = [].concat(arrValue, _toConsumableArray(items)).slice(0, 10);
-            (0,_getWeather__WEBPACK_IMPORTED_MODULE_0__/* .getWeather */ .p)(value, document.getElementById("app"));
+                      // добавляем элемент в список
+                      // items.push(value);
+                      arrValue = [value];
+                      items = [].concat(arrValue, _toConsumableArray(items)).slice(0, 10);
 
-            // обновляем список
-            drawList(listEl, items);
+                      // обновляем список
+                      drawList(listEl, items);
 
-            // сохраняем список
-            saveList(items);
-          });
+                      // сохраняем список
+                      saveList(items);
+                    } else {
+                      alert("Такого города не существует");
+                    }
+                  case 9:
+                  case "end":
+                    return _context.stop();
+                }
+              }, _callee);
+            }));
+            return function (_x2) {
+              return _ref.apply(this, arguments);
+            };
+          }());
         case 11:
         case "end":
-          return _context2.stop();
+          return _context3.stop();
       }
-    }, _callee2);
+    }, _callee3);
   }));
   return _storageManager.apply(this, arguments);
 }
@@ -347,4 +381,4 @@ showWeather(document.getElementById("app"));
 }();
 /******/ })()
 ;
-//# sourceMappingURL=index-5b254712f0c251000ae1.js.map
+//# sourceMappingURL=index-f8f7bd1ac70d83e9ba39.js.map
