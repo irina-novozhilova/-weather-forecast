@@ -95,7 +95,7 @@ function _storageManager() {
           drawList(listEl, items);
           form.addEventListener("submit", /*#__PURE__*/function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(ev) {
-              var formElement, input, value, weatherData, arrValue;
+              var formElement, input, value, weatherData, checkItems, arrValue;
               return _regeneratorRuntime().wrap(function _callee$(_context) {
                 while (1) switch (_context.prev = _context.next) {
                   case 0:
@@ -113,12 +113,14 @@ function _storageManager() {
                     weatherData = _context.sent;
                     // проверка на несуществующий город
                     if (weatherData.cod === 200) {
-                      console.log(weatherData);
-
-                      // добавляем элемент в список
-                      // items.push(value);
-                      arrValue = [value];
-                      items = [].concat(arrValue, _toConsumableArray(items)).slice(0, 10);
+                      checkItems = items.map(function (x) {
+                        return x.toLowerCase();
+                      });
+                      if (checkItems.indexOf(value.toLowerCase()) === -1) {
+                        // добавляем элемент в список
+                        arrValue = [value];
+                        items = [].concat(arrValue, _toConsumableArray(items)).slice(0, 10);
+                      }
 
                       // обновляем список
                       drawList(listEl, items);
@@ -148,4 +150,4 @@ function _storageManager() {
 }
 /******/ })()
 ;
-//# sourceMappingURL=localStorage-f8f7bd1ac70d83e9ba39.js.map
+//# sourceMappingURL=localStorage-4bbd996eeb9a55c2765a.js.map
