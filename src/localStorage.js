@@ -43,7 +43,7 @@ export async function storageManager(rootElement) {
   // и отрисовываем список
   drawList(listEl, items);
 
-  form.addEventListener("submit", (ev) => {
+  form.addEventListener("submit", async (ev) => {
     // чтобы не перезагружать страницу
     ev.preventDefault();
 
@@ -53,16 +53,24 @@ export async function storageManager(rootElement) {
     const { value } = input;
     input.value = "";
 
-    // добавляем элемент в список
-    // items.push(value);
-    const arrValue = [value];
-    items = [...arrValue, ...items].slice(0, 10);
-    getWeather(value, document.getElementById("app"));
+    const weatherData = await getWeather(value, document.getElementById("app"));
 
-    // обновляем список
-    drawList(listEl, items);
+    // проверка на несуществующий город
+    if (weatherData.cod === 200) {
+      console.log(weatherData);
 
-    // сохраняем список
-    saveList(items);
+      // добавляем элемент в список
+      // items.push(value);
+      const arrValue = [value];
+      items = [...arrValue, ...items].slice(0, 10);
+
+      // обновляем список
+      drawList(listEl, items);
+
+      // сохраняем список
+      saveList(items);
+    } else {
+      alert("Такого города не существует");
+    }
   });
 }
