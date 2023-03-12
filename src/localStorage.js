@@ -57,12 +57,13 @@ export async function storageManager(rootElement) {
 
     // проверка на несуществующий город
     if (weatherData.cod === 200) {
-      console.log(weatherData);
+      const checkItems = items.map((x) => x.toLowerCase());
 
-      // добавляем элемент в список
-      // items.push(value);
-      const arrValue = [value];
-      items = [...arrValue, ...items].slice(0, 10);
+      if (checkItems.indexOf(value.toLowerCase()) === -1) {
+        // добавляем элемент в список
+        const arrValue = [value];
+        items = [...arrValue, ...items].slice(0, 10);
+      }
 
       // обновляем список
       drawList(listEl, items);
