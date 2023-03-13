@@ -1,6 +1,8 @@
 import { storageManager } from "./localStorage";
 import * as mockData from "./mockData";
-import { getWeather } from "./getWeather";
+import * as getWeatherMock from "./getWeather";
+
+const sleep = (x) => new Promise((resolve) => setTimeout(resolve, x));
 
 describe("storageManager", () => {
   let app;
@@ -64,8 +66,22 @@ describe("storageManager", () => {
     expect(cityLink.innerHTML).toBe("Saratov");
 
     cityLink.click();
-    await getWeather("Saratov", app);
+    await getWeatherMock.getWeather("Saratov", app);
 
     expect(app.querySelector("p").innerHTML).toBe("Город Saratov");
+  });
+
+  it("wrong address shows alert", async () => {
+    jest.spyOn(window, "alert").mockImplementation(() => {});
+
+    const getWeatherMocked = jest.spyOn(getWeatherMock, "getWeather");
+    getWeatherMocked.mockResolvedValue(mockData.weatherError);
+
+    el.querySelector("input").value = "asdfg";
+    el.querySelector("form").submit();
+
+    await sleep(100);
+
+    expect(window.alert.mock.calls.length).toBe(1);
   });
 });
