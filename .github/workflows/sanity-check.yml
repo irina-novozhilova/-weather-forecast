@@ -24,10 +24,3 @@ jobs:
       - name: Test coverage
         run: |
           npm run test:coverage
-
-      - name: Create Coverage Badges
-        uses: jaywcjlove/coverage-badges-cli@main
-        with:
-          style: flat
-          source: coverage/coverage-summary.json
-          output: coverage/badges.svg

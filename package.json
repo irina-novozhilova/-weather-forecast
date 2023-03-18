@@ -10,8 +10,7 @@
     "test:coverage": "jest --coverage --colors",
     "lint": "prettier --check . && eslint .",
     "lint:fix": "prettier --write . && eslint . --fix",
-    "prepare": "husky install",
-    "make-badges": "coverage-badges"
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -58,7 +57,6 @@
     "*.{js,css}": "prettier --write"
   },
   "dependencies": {
-    "coverage-badges-cli": "^1.1.0",
     "livereload": "^0.9.3",
     "node-static": "^0.7.11"
   }
