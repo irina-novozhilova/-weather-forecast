@@ -1,9 +1,0 @@
-body {
-  background-color: #ccc;
-}
-
-.image {
-  width: 300px;
-  height: 300px;
-  background: url("./images/cat.jpeg") center center / cover;
-}

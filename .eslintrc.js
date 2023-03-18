@@ -16,5 +16,10 @@ module.exports = {
     "max-len": "off",
     "no-console": ["error", { allow: ["warn", "error", "log"] }],
     "no-alert": "off",
+    "no-promise-executor-return": "off",
+  },
+  globals: {
+    ymaps: "writable",
+    yandexMap: "writable",
   },
 };
